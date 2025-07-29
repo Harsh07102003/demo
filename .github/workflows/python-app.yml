@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  copy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -36,5 +36,5 @@ jobs:
         proxy_username: ubuntu
         proxy_key: ${{ secrets.PEM }}
         source: "main.py"
-        target: "~/app/"
+        target: "/home/ubuntu/app/"
         overwrite: true
