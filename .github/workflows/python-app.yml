@@ -36,5 +36,5 @@ jobs:
         proxy_username: ubuntu
         proxy_key: ${{ secrets.PEM }}
         source: "main.py"
-        target: "/home/ubuntu/app/"
+        target: "~/app/"
         overwrite: true
