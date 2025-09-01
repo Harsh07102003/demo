@@ -17,22 +17,16 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.PEM }}
-        proxy_host: ${{ secrets.JUMP_HOST }}
-        proxy_username: ubuntu
-        proxy_key: ${{ secrets.PEM }}
         script: |
           set -e
           mkdir -p ~/app
 
-    - name: Copy build artifacts to EC2 via Jump Server
+    - name: Copy build artifacts to EC2
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.PEM }}
-        proxy_host: ${{ secrets.JUMP_HOST }}
-        proxy_username: ubuntu
-        proxy_key: ${{ secrets.PEM }}
         source: "main.py"
         target: "~/app/"
         overwrite: true
