@@ -1,9 +1,7 @@
 name: Deploy Python Script via Jump Server
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   deploy:
