@@ -1,7 +1,9 @@
-name: Deploy Python Script to EC2
+name: Deploy Python Script via Jump Server
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   deploy:
@@ -17,28 +19,22 @@ jobs:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.PEM }}
+        proxy_host: ${{ secrets.JUMP_HOST }}
+        proxy_username: ubuntu
+        proxy_key: ${{ secrets.PEM }}
         script: |
           set -e
           mkdir -p ~/app
 
-    - name: Copy Python script to EC2
+    - name: Copy build artifacts to EC2 via Jump Server
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.PEM }}
+        proxy_host: ${{ secrets.JUMP_HOST }}
+        proxy_username: ubuntu
+        proxy_key: ${{ secrets.PEM }}
         source: "main.py"
         target: "~/app/"
         overwrite: true
-
-    - name: Install Python and run script
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.PEM }}
-        script: |
-          set -e
-          sudo apt update
-          sudo apt install -y python3 python3-pip
-          python3 ~/app/main.py
