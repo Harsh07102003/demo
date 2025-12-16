@@ -38,3 +38,4 @@ jobs:
         source: "main.py"
         target: "~/app/"
         overwrite: true
+
